@@ -77,6 +77,9 @@ mariadb@META
 
 php8.0-soap
 php8.0-calendar
+php8.0-sockets
+php8.0-pgsql
+php8.0-ldap
 
 xprobe2
 
@@ -110,3 +113,4 @@ seavgabios
 haproxy
 keepalived
 eepm
+eepm-yum

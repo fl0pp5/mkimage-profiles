@@ -41,10 +41,11 @@ endif
 mixin/vm-archdep-x11: mixin/vm-archdep +vmguest; @:
 
 mixin/regular-vm-base: use/firmware use/ntp/chrony use/repo \
-	use/services/lvm2-disable
+	use/services/lvm2-disable use/wireless
 ifneq (,$(filter-out i586 x86_64,$(ARCH)))
 	@$(call add,DEFAULT_SERVICES_DISABLE,multipathd)
 endif
+	@$(call add,DEFAULT_SERVICES_ENABLE,sshd)
 	@$(call add,THE_PACKAGES,bash-completion mc update-kernel)
 	@$(call add,THE_PACKAGES,vim-console)
 	@$(call add,KMODULES,staging)
@@ -56,23 +57,14 @@ mixin/regular-vm-jeos: mixin/regular-vm-base use/deflogin/root \
 	@$(call add,DEFAULT_SERVICES_ENABLE,getty@tty1 livecd-net-eth)
 
 mixin/regular-vm-x11:: mixin/regular-vm-base mixin/regular-x11 \
-	mixin/regular-desktop use/oem +wireless; @:
+	mixin/regular-desktop use/oem/vnc; @:
 
-ifeq (,$(filter-out riscv64,$(ARCH)))
-mixin/regular-vm-x11:: use/oem/vnc; @:
-endif
-
-vm/.regular-desktop:: vm/systemd mixin/regular-vm-x11 \
+vm/.regular-desktop: vm/systemd mixin/regular-vm-x11 \
 	+systemd +systemd-optimal +plymouth
 	@$(call add,THE_PACKAGES,bluez)
+	@$(call add,THE_PACKAGES,glmark2 glmark2-es2)
 	@$(call add,DEFAULT_SERVICES_ENABLE,bluetoothd)
-
-ifeq (,$(filter-out armh aarch64,$(ARCH)))
-vm/.regular-desktop::
-	@$(call add,THE_PACKAGES,xorg-96dpi)
-	@$(call add,THE_LISTS,remote-access)
 	@$(call try,VM_SIZE,6442450944)
-endif
 
 vm/.regular-desktop-sysv: vm/bare mixin/regular-vm-x11 use/x11/gdm2.20 \
 	use/init/sysv/polkit +power; @:
@@ -105,11 +97,15 @@ vm/regular-gnome3: vm/.regular-gtk mixin/regular-gnome3 mixin/vm-archdep-x11
 
 vm/regular-lxde: vm/.regular-gtk mixin/regular-lxde mixin/vm-archdep-x11; @:
 
-vm/regular-mate: vm/.regular-gtk mixin/mate-base mixin/vm-archdep-x11
+vm/regular-mate: vm/.regular-gtk mixin/mate-base mixin/vm-archdep-x11; @:
+ifeq (,$(filter-out mipsel riscv64,$(ARCH)))
 	@$(call add,THE_PACKAGES,mate-reduced-resource)
+endif
 
-vm/regular-xfce: vm/.regular-gtk mixin/regular-xfce mixin/vm-archdep-x11
+vm/regular-xfce: vm/.regular-gtk mixin/regular-xfce mixin/vm-archdep-x11; @:
+ifeq (,$(filter-out mipsel riscv64,$(ARCH)))
 	@$(call add,THE_PACKAGES,xfce-reduced-resource)
+endif
 
 vm/regular-kde5: vm/.regular-gtk mixin/regular-kde5 mixin/vm-archdep-x11
 	@$(call set,VM_SIZE,7516192768)
