@@ -19,6 +19,7 @@ Requires: mkimage >= 0.2.5
 Requires: mkimage-preinstall
 
 # Recommends: graphviz qemu-img
+# Recommends: isomd5sum
 
 %define mpdir %_datadir/%name
 %add_findreq_skiplist %mpdir/*.in/*
