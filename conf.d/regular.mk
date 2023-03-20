@@ -45,7 +45,10 @@ endif
 # WM base target
 distro/.regular-wm: distro/.regular-x11 \
 	mixin/regular-desktop +vmguest \
-	use/live/rw use/live/install; @:
+	use/live/rw +live-installer
+	@$(call set,INSTALLER,alt-workstation)
+	@$(call set,GRUB_DEFAULT,live)
+	@$(call set,SYSLINUX_DEFAULT,live)
 
 # DE base target
 # TODO: use/plymouth/live when luks+plymouth is done, see also #28255
@@ -127,7 +130,7 @@ endif
 distro/.regular-install-x11: distro/.regular-install +vmguest +wireless \
 	use/install2/suspend mixin/regular-desktop mixin/regular-x11 \
 	use/branding/complete use/branding/slideshow/once
-	@$(call set,INSTALLER,altlinux-desktop)
+	@$(call set,INSTALLER,alt-workstation)
 
 # assumes somewhat more experienced user
 distro/.regular-install-x11-full: distro/.regular-install-x11 \

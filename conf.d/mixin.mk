@@ -38,7 +38,7 @@ mixin/e2k-mate: use/e2k/x11 use/x11/xorg use/fonts/install2 \
 	@$(call add,THE_PACKAGES,zsh bash-completion)
 
 ### regular.mk
-mixin/regular-x11: use/luks use/volumes/regular \
+mixin/regular-x11: use/luks use/volumes/alt-workstation \
 	use/browser/firefox use/kernel/disable-usb-autosuspend \
 	use/branding use/ntp/chrony use/services/lvm2-disable
 	@$(call add,THE_LISTS,$(call tags,(base || desktop) && regular && !extra))
@@ -74,7 +74,6 @@ mixin/desktop-extra:
 	@$(call add,BASE_LISTS,$(call tags,(archive || base) && extra))
 
 mixin/regular-wmaker: use/fonts/ttf/redhat use/x11/wmaker +nm-gtk
-	@$(call add,LIVE_PACKAGES,livecd-install-wmaker)
 	@$(call add,LIVE_PACKAGES,installer-feature-no-xconsole-stage3)
 	@$(call add,MAIN_PACKAGES,wmgtemp wmhdaps wmxkbru xxkb)
 
@@ -96,6 +95,9 @@ mixin/regular-gnome3: use/x11/gnome3 use/fonts/ttf/redhat +nm-gtk
 	@$(call add,THE_PACKAGES,xcalib templates)
 	@$(call add,THE_PACKAGES,chrome-gnome-shell)
 	@$(call add,THE_PACKAGES,qt5-wayland)
+ifeq (sisyphus,$(BRANCH))
+	@$(call add,THE_PACKAGES,gnome-packagekit)
+endif
 
 mixin/regular-kde5: use/x11/kde5 use/browser/falkon \
 	use/x11/kde5-display-manager-lightdm \
@@ -118,7 +120,7 @@ mixin/regular-xfce: mixin/xfce-base use/domain-client +pulse
 	@$(call add,THE_PACKAGES,pavucontrol xscreensaver-frontend)
 	@$(call add,THE_PACKAGES,xfce4-pulseaudio-plugin xfce-polkit)
 
-mixin/regular-xfce-sysv: mixin/xfce-base \
+mixin/regular-xfce-sysv: mixin/xfce-base +net-eth \
 	use/fonts/otf/adobe use/fonts/otf/mozilla
 	@$(call add,THE_LISTS,xfce-sysv)
 
