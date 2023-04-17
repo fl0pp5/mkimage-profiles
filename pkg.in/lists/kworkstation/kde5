@@ -5,9 +5,16 @@ catdoc
 gdb
 fuse-cryfs
 libnss-mdns
-libcuda
 nvidia-modprobe
 plasma5-libkscreen-utils
+
+libnvidia-encode
+libcuda
+libnvoptix
+libnvcuvid
+ocl-nvidia
+ocl-icd@X32
+clinfo
 
 alt-csp-cryptopro
 rosa-crypto-tool
@@ -23,9 +30,8 @@ kde5-kcm-grub2
 #
 #appinstall@X86
 synaptic-kde@META
-plasma5-discover-maxi@META
-plasma5-discover-flatpak@META
-flatpak-repo-flathub
+plasma5-discover-fwupd
+plasma5-discover-kns
 openssl-gost-engine
 kde5-kreslimit
 kde5-file-actions-gost
@@ -40,6 +46,7 @@ qmmp1
 qmmp-skins
 
 samba
+samba-usershares
 # system-config-samba
 
 kde5-messenger-client-mix

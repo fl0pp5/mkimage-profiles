@@ -11,9 +11,9 @@ gnupg2
 # 1C
 #1c-preinstall-full@X86 # ms-fonts license
 1c-preinstall@X86
-postgresql14-1C
-postgresql14-1C-server
-postgresql14-1C-contrib
+postgresql15-1C
+postgresql15-1C-server
+postgresql15-1C-contrib
 haspd@IA32
 # VipNet CSP
 vipnetcsp4-preinstall
@@ -75,3 +75,7 @@ alterator-netinst
 alterator-updates
 alien
 virt-viewer
+x2goclient
+x2goserver x2goserver-printing cups-x2go
+x2gobroker x2gobroker-ssh x2gobroker-daemon x2gobroker-authservice
+openuds-client openuds-actor

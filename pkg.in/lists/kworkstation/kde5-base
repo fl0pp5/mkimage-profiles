@@ -10,6 +10,7 @@ pavucontrol
 plasma5-discover-packagekit@META
 
 alt-kworkstation-addon
+alterator-roles-common
 alterator-standalone
 alterator-auth
 alterator-control
@@ -89,6 +90,7 @@ pciutils
 pcmciautils
 pinfo
 pm-utils
+polkit-rule-admin-root
 pulseaudio-bluez
 quota
 rpminstall
@@ -112,6 +114,7 @@ vdpauinfo
 vim-console
 vkd3d-utils
 vulkan-tools
+vulkan-validation-layers
 wget
 xauthority-hostname-updater
 xinput
@@ -119,14 +122,13 @@ xfsprogs
 xorg-conf-synaptics
 xorg-conf-libinput-touchpad
 
-ocl-nvidia
-ocl-icd@X32
-clinfo
 libva-driver-intel@X86
 libva-intel-media-driver@x86_64
 #libva-driver-vdpau
 #libvdpau-va-gl
 vulkan-amdgpu@X86
+
+orca at-spi2-core
 
 ca-certificates-digital.gov.ru
 chromium-gost
@@ -135,6 +137,7 @@ openvpn-gostcrypto
 kde5-display-manager-sddm
 kde5-network-manager-etcnet
 openssh openssh-clients openssh-askpass-common openssh-server openssh-common openssh-server-control
+systemd-ssh-agent
 kde5-network-manager-nm
 kde5-video-player-haruna
 kde5-audio-player-qmmp

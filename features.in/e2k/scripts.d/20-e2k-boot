@@ -4,6 +4,10 @@ echo "** 20-e2k-boot START"
 
 cd "$WORKDIR"
 
+# Rename kernel image, unable to boot kernel from CD/DVD
+# if its name does not contain "." (mcst#6856).
+mv boot/image{,.0}
+
 # slightly different logic as there's no boot *menu*:
 # ensure the user can install this if possible
 [ -f live    ] && default=live
@@ -18,33 +22,43 @@ default=$default
 timeout=3
 EOF
 
-for i in live altinst rescue; do
-	[ -f "$i" ] || continue
-
-	if [ "$i" = "altinst" ]; then
-		label=install
-		stage2=
+for i in live altinst liveinst rescue; do
+	if [ "$i" = liveinst ]; then
+		[ -f live ] || continue
+		[ ! -f altinst ] || continue
+		[ -f Metadata/pkg-groups.tar ] || continue
 	else
-		label="$i"
-		stage2="stagename=$i"
+		[ -f "$i" ] || continue
 	fi
 
-# Rename kernel image, unable to boot kernel from CD/DVD
-# if its name does not contain "." (mcst#6856).
-mv boot/image{,.0}
+	case "$i" in
+	altinst)
+		label=install
+		stage2=
+	;;
+	liveinst)
+		label=install
+		stage2="stagename=live"
+		init="init=/usr/sbin/install2-init"
+	;;
+	*)
+		label="$i"
+		stage2="stagename=$i"
+	;;
+	esac
 
 	cat >> boot.conf << EOF
 
 label=$label
     partition=0
     image=/boot/image.0
-    cmdline=console=ttyS0,115200 console=tty0 hardreset fastboot live automatic=method:cdrom ${stage2:+$stage2 }${GLOBAL_STAGE2_BOOTARGS:+$GLOBAL_STAGE2_BOOTARGS }${GLOBAL_BOOT_LANG:+lang=$GLOBAL_BOOT_LANG}
+    cmdline=console=ttyS0,115200 console=tty0 hardreset fastboot live automatic=method:cdrom ${stage2:+$stage2 }${init:+$init }${GLOBAL_STAGE2_BOOTARGS:+$GLOBAL_STAGE2_BOOTARGS }${GLOBAL_BOOT_LANG:+lang=$GLOBAL_BOOT_LANG}
     initrd=/boot/initrd.img
 
 label=${label}_flash
     partition=0
     image=/boot/image.0
-    cmdline=console=ttyS0,115200 console=tty0 hardreset fastboot live lowmem automatic=method:disk,label:altinst,directory:/ ${stage2:+$stage2 }${GLOBAL_STAGE2_BOOTARGS:+$GLOBAL_STAGE2_BOOTARGS }${GLOBAL_BOOT_LANG:+lang=$GLOBAL_BOOT_LANG}
+    cmdline=console=ttyS0,115200 console=tty0 hardreset fastboot live lowmem automatic=method:disk,label:altinst,directory:/ ${stage2:+$stage2 }${init:+$init }${GLOBAL_STAGE2_BOOTARGS:+$GLOBAL_STAGE2_BOOTARGS }${GLOBAL_BOOT_LANG:+lang=$GLOBAL_BOOT_LANG}
     initrd=/boot/initrd.img
 EOF
 done
