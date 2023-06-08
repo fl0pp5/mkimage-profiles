@@ -94,16 +94,15 @@ mixin/regular-deepin: use/x11/deepin use/browser/chromium +nm; @:
 mixin/regular-gnome3: use/x11/gnome3 use/fonts/ttf/redhat +nm-gtk
 	@$(call add,THE_PACKAGES,xcalib templates)
 	@$(call add,THE_PACKAGES,chrome-gnome-shell)
-	@$(call add,THE_PACKAGES,qt5-wayland)
-ifeq (sisyphus,$(BRANCH))
-	@$(call add,THE_PACKAGES,gnome-packagekit)
-endif
+	@$(call add,THE_PACKAGES,qt5-wayland qt6-wayland)
+	@$(call add,THE_PACKAGES,packagekit)
 
 mixin/regular-kde5: use/x11/kde5 use/browser/falkon \
 	use/x11/kde5-display-manager-lightdm \
 	use/fonts/ttf/google use/fonts/ttf/redhat use/fonts/zerg \
 	+pulse
 	@$(call add,THE_PACKAGES,kde5-telepathy)
+	@$(call add,THE_PACKAGES,qt6-wayland)
 ifneq (,$(filter-out e2k%,$(ARCH)))
 	@$(call add,THE_PACKAGES,falkon-kde5)
 endif

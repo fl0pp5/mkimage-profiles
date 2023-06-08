@@ -6,6 +6,7 @@ gdb
 fuse-cryfs
 libnss-mdns
 nvidia-modprobe
+nvidia-smi
 plasma5-libkscreen-utils
 
 libnvidia-encode
@@ -15,6 +16,7 @@ libnvcuvid
 ocl-nvidia
 ocl-icd@X32
 clinfo
+nvidia-vaapi-driver
 
 alt-csp-cryptopro
 rosa-crypto-tool
@@ -89,6 +91,8 @@ kde5-ktorrent
 #eiskaltdcpp-qt
 #kde5-kio-gdrive
 
+plasma5-welcome
 plasma5-desktop-maxi
+plasma5-kinfocenter-maxi
 kde5@META
 kde5-big@META

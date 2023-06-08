@@ -101,6 +101,8 @@ ifeq (sisyphus,$(BRANCH))
 endif
 	@$(call add,BASE_PACKAGES,nfs-utils gdisk)
 	@$(call add,INSTALL2_PACKAGES,fdisk)
+	@$(call add,INSTALL2_PACKAGES,btrfs-progs)
+	@$(call add,BASE_PACKAGES,btrfs-progs)
 ifeq (,$(filter-out e2k%,$(ARCH)))
 	@$(call add,CLEANUP_PACKAGES,acpid-events-power)
 else
@@ -191,9 +193,9 @@ distro/regular-cinnamon: distro/.regular-gtk mixin/regular-cinnamon; @:
 
 # not .regular-gtk due to gdm vs lightdm
 distro/regular-gnome3: distro/.regular-desktop mixin/regular-gnome3 \
-	use/kernel/latest +plymouth
+	use/kernel/latest +plymouth use/browser/epiphany
 	@$(call add,LIVE_PACKAGES,livecd-gnome3-setup-done)
-	@$(call add,LIVE_PACKAGES,gnome-flashback screenpen)
+	@$(call add,LIVE_PACKAGES,screenpen)
 
 distro/regular-lxqt: distro/.regular-gtk mixin/regular-lxqt +plymouth
 	@$(call add,THE_LISTS,$(call tags,lxqt desktop))

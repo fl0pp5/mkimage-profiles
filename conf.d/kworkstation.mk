@@ -12,7 +12,7 @@ mixin/kworkstation-common-deps: \
 	use/vmguest/complete use/vmguest/vbox/x11 use/vmguest/vmware/x11 \
 	use/power/acpi \
 	use/luks \
-	use/net-eth/dhcp use/net-ssh use/net/nm/nodelay \
+	use/net-eth/dhcp use/net-ssh use/net/nm/nodelay use/net/etcnet \
 	use/ntp/chrony \
 	use/docs/full \
 	use/xdg-user-dirs \
@@ -26,10 +26,12 @@ mixin/kworkstation-common-deps: \
 	use/stage2/ata use/stage2/fs use/stage2/hid use/stage2/md \
 	use/stage2/mmc use/stage2/net use/stage2/net-nfs use/stage2/cifs \
 	use/stage2/rtc use/stage2/sbc use/stage2/scsi use/stage2/usb \
-	+net-eth +wireless +pulse +plymouth +systemd-optimal +wireless +vmguest +efi +nm \
+	use/alternatives/xvt/konsole \
+	+wireless +pulse +plymouth +systemd-optimal +wireless +vmguest +efi +nm \
 	use/stage2/kms/nvidia
 
 mixin/kworkstation-common-opts:
+	@$(call set,LOCALES,ru_RU be_BY en_US)
 	@$(call set,BRANDING,xalt-kworkstation)
 ifeq (,$(filter-out i586 x86_64,$(ARCH)))
 	@$(call set,BOOTLOADER,grubpcboot)
@@ -52,9 +54,6 @@ endif
 	@$(call add,THE_PACKAGES,fonts-ttf-google-noto-sans)
 	@$(call add,THE_PACKAGES,fonts-ttf-google-noto-serif)
 	@$(call add,THE_PACKAGES,fonts-ttf-google-noto-sans-mono)
-	@$(call add,THE_PACKAGES,fonts-ttf-google-droid-sans)
-	@$(call add,THE_PACKAGES,fonts-ttf-google-droid-serif)
-	@$(call add,THE_PACKAGES,fonts-ttf-google-droid-sans-mono)
 	@$(call add,THE_PACKAGES,fonts-ttf-google-crosextra-caladea)
 	@$(call add,THE_PACKAGES,fonts-ttf-google-crosextra-carlito)
 	@$(call add,THE_PACKAGES,fonts-ttf-google-noto-sans-symbols)
@@ -120,7 +119,7 @@ mixin/kworkstation-install-opts:
 	@$(call add,THE_PACKAGES,installer-feature-nfs-client-stage3)
 	@$(call add,INSTALL2_PACKAGES,ntfs-3g)
 	@$(call add,INSTALL2_PACKAGES,btrfs-progs)
-	@$(call add,INSTALL2_PACKAGES,installer-feature-samba-usershares-stage2)
+	@$(call add,INSTALL2_PACKAGES,installer-feature-samba-usershares-kde-stage2)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-samba-automount-stage2)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-weak-passwd)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-desktop-disable-remote-stage2)
@@ -132,7 +131,7 @@ mixin/kworkstation-install-opts:
 	@$(call add,INSTALL2_PACKAGES,installer-feature-set-tz)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-rootgtktheme-stage2)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-alterator-setup-stage2)
-	@$(call add,INSTALL2_PACKAGES,installer-feature-sddm-setup)
+	@$(call add,INSTALL2_PACKAGES,installer-feature-lightdm-kde)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-packagekit-setup)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-xprofile-clear)
 	@$(call add,INSTALL2_PACKAGES,installer-feature-systemd-oomd)
