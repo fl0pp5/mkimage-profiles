@@ -9,8 +9,11 @@ vm/systemd: vm/.base-grub use/init/systemd
 	@$(call add,BASE_PACKAGES,glibc-gconv-modules glibc-locales tzdata)
 	@$(call add,BASE_PACKAGES,apt)
 
-vm/acos: vm/.base-grub use/init/systemd use/net-eth/networkd-dhcp use/net-ssh
-	@$(call add,BASE_PACKAGES,ostree dracut ignition docker-engine sudo su)
+vm/altcos: vm/.base-grub use/init/systemd use/net-eth/networkd-dhcp use/net-ssh
+	@$(call add,BASE_PACKAGES,ostree acos-config docker-engine docker-compose-v2 sudo su zincati libnss-altfiles podman)
+	@$(call add,DEFAULT_SERVICES_ENABLE,ignition-firstboot-complete ostree-remount zincati sshd docker systemd-resolved)
+	@$(call add,BASE_PACKAGES,apt-repo apt)
+
 
 # handle ROOTPW (through deflogin)
 vm/net: vm/bare use/net-eth/dhcp use/net-ssh \

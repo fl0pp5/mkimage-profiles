@@ -1,0 +1,20 @@
+#!/bin/sh
+
+mv -f -- /etc/inittab.altcos /etc/inittab
+
+# enable NFS mounts
+if [ -x /etc/rc.d/init.d/rpcbind ]; then
+	chkconfig rpcbind on
+	sed -i 's,#\(RPCBIND_ARGS="-l".*\),\1,' /etc/sysconfig/rpcbind
+fi
+
+# remove unwanted startup scripts
+echo "** removing initscripts:"
+find /etc/rc.d/rc{2,3,4,5}.d/ -type l -name 'S*' \
+	-not -name '*logd' \
+	-not -name '*network' \
+	-not -name '*random' \
+	-not -name '*udev*' \
+	-delete -print
+
+ln -s ../init.d/livecd-net-eth /etc/rc.d/rc3.d/S05livecd-net-eth
