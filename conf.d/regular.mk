@@ -1,13 +1,6 @@
 # regular build/usage images
 ifeq (distro,$(IMAGE_CLASS))
 
-distro/installer-altcos: distro/.regular-base use/isohybrid \
-	use/syslinux/ui/menu use/syslinux/timeout/100 \
-	use/firmware/qlogic +sysvinit use/mediacheck \
-	use/stage2/kms use/kernel/latest use/installer-altcos
-	@$(call set,BOOTLOADER,isolinux)
-	@$(call add,INSTALLER_ALTCOS_PACKAGES,altcos-archives gpm curl)
-
 # common ground (really lowlevel)
 distro/.regular-bare: distro/.base use/kernel/net use/docs/license \
 	use/stage2/ata use/stage2/fs use/stage2/hid use/stage2/md \

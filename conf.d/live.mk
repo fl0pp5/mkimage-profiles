@@ -176,3 +176,10 @@ distro/live-privacy-dev: distro/live-privacy use/live/rw use/live/repo \
 	@$(call add,MAIN_PACKAGES,syslinux mkisofs)
 
 endif
+
+distro/live-altcos-install: distro/.base +efi +systemd \
+	use/live/base use/l10n
+	@$(call add,LIVE_PACKAGES,libostree startup startup-installer-altcos mkpasswd udev interactivesystem)
+	@$(call add,LIVE_PACKAGES,altcos-archives gpm curl)
+	@$(call set,BOOTLOADER,grubpcboot)
+
