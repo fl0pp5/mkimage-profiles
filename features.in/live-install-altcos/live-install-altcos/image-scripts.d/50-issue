@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "Hello! Say \"root\" to log in" >> /etc/issue
+
+echo "Type \"altcos-installer.sh\"" >> /etc/motd
